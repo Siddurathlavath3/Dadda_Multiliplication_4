@@ -1,0 +1,1 @@
+Using the Dadda reduction tree we decrease the area and power of the circuit.

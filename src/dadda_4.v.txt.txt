@@ -1,0 +1,45 @@
+module dadda_4(s,x,y);
+input [3:0] x,y;
+output [7:0] s;//s[7] is carry out of the Ripple Carry Adder
+wire [16:1]a;
+wire [18:1] w;
+wire b=1'b0;
+
+//Partial Products
+assign a[1]=x[0]&y[0];
+assign a[2]=x[1]&y[0];
+assign a[3]=x[2]&y[0];
+assign a[4]=x[3]&y[0];
+
+assign a[5]=x[0]&y[1];
+assign a[6]=x[1]&y[1];
+assign a[7]=x[2]&y[1];
+assign a[8]=x[3]&y[1];
+
+assign a[9]=x[0]&y[2];
+assign a[10]=x[1]&y[2];
+assign a[11]=x[2]&y[2];
+assign a[12]=x[3]&y[2];
+
+assign a[13]=x[0]&y[3];
+assign a[14]=x[1]&y[3];
+assign a[15]=x[2]&y[3];
+assign a[16]=x[3]&y[3];
+
+//Dadda reduction Adders
+ha h1(.s(w[4]),.c(w[3]),.a(a[4]),.b(a[7]));
+ha h2(.s(w[2]),.c(w[1]),.a(a[8]),.b(a[11]));
+ha h3(.s(w[12]),.c(w[11]),.a(a[3]),.b(a[6]));
+fa f1(.sum(w[10]),.carry(w[9]),.a(w[4]),.b(a[13]),.c(a[10]));
+fa f2(.sum(w[8]),.carry(w[7]),.a(w[3]),.b(w[2]),.c(a[14]));
+fa f3(.sum(w[6]),.carry(w[5]),.a(w[1]),.b(a[12]),.c(a[15]));
+
+//Final Adder
+ha h4(.s(s[0]),.c(w[13]),.a(a[1]),.b(b));
+fa f4(.sum(s[1]),.carry(w[14]),.a(w[13]),.b(a[2]),.c(a[5]));
+fa f5(.sum(s[2]),.carry(w[15]),.a(w[14]),.b(a[9]),.c(w[12]));
+fa f6(.sum(s[3]),.carry(w[16]),.a(w[15]),.b(w[11]),.c(w[10]));
+fa f7(.sum(s[4]),.carry(w[17]),.a(w[16]),.b(w[9]),.c(w[8]));
+fa f8(.sum(s[5]),.carry(w[18]),.a(w[17]),.b(w[7]),.c(w[6]));
+fa f9(.sum(s[6]),.carry(s[7]),.a(w[18]),.b(w[5]),.c(a[16]));
+endmodule

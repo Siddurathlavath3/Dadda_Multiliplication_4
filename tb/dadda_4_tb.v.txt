@@ -1,0 +1,14 @@
+module dadda_4_tb();
+reg [3:0] x,y;
+wire [7:0] s;
+dadda_4 my_design(s,x,y);
+initial
+begin
+x=4'b0111;y=4'b0110;
+#10 x=4'b0101;y=4'b0101;
+#10 x=4'b0010;y=4'b0010; 
+#10 x=4'b0100;y=4'b0100;
+#10 x=4'b0111;y=4'b0111;
+#10 $stop;
+end
+endmodule
