@@ -43,3 +43,19 @@ fa f7(.sum(s[4]),.carry(w[17]),.a(w[16]),.b(w[9]),.c(w[8]));
 fa f8(.sum(s[5]),.carry(w[18]),.a(w[17]),.b(w[7]),.c(w[6]));
 fa f9(.sum(s[6]),.carry(s[7]),.a(w[18]),.b(w[5]),.c(a[16]));
 endmodule
+
+//Half Adder
+module ha(s,c,a,b);
+input a,b;
+output s,c;
+assign s=a^b;
+assign c=a&b;
+endmodule
+
+//Full Adder
+module fa(sum,carry,a,b,c);
+input a,b,c;
+output sum,carry;
+assign sum=(a^b^c);
+assign carry=(a&b)|(b&c)|(c&a);
+endmodule
